@@ -1,0 +1,47 @@
+ .nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    position: sticky;
+    top: 0;
+    transition: 999ms;
+    z-index: 1;
+}
+
+.colorChange{
+    background-color: #2B2B2B;
+        
+}
+
+.nav a{
+    color: rgb(213, 141, 38);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    transition: 300ms;
+}
+.nav a:hover {
+    transform: scale(1.1);
+}
+.nav .imgLink{
+    display: flex;
+    align-items: center;
+}
+.nav .cart
+ {
+    color: red;
+}
+.cartBTN{
+    height: 2rem;
+    display: flex;
+    align-items: center;
+}
+.cartBTN span {
+    position: relative;
+    left: 55%;
+    bottom: 18%;
+    font-size: 1.3rem;
+}

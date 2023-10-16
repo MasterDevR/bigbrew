@@ -1,0 +1,17 @@
+.Add_button{
+    width: 64%;
+        height: auto;
+        padding: 0.5rem;
+        background-color: #d58d26;
+        border: none;
+        color: white;
+        font-weight: bold;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: 333ms;
+}
+
+.Add_button:hover {
+    background-color:#2B2B2B;
+    color: #d58d26;
+}
