@@ -10,118 +10,136 @@ const defaultStoreState = {
 
 const storeReducer = (state, action) => {
   if (action.type === "addToCart") {
-    const productID = action.item.id;
+    const newItem = action.item;
+    const existingItem = state.cartItems.find((item) => item.id === newItem.id);
 
-    const isExistingIndex = state.cartItems.findIndex(
-      (item) => item.id === productID
-    );
-
-    let updatedToQuantity = 0;
-    let updatedTotalPrice = 0;
-    let updatedCartItems;
-
-    if (isExistingIndex !== -1) {
-      updatedCartItems = [...state.cartItems];
-      updatedCartItems[isExistingIndex].quantity += 1;
-      updatedCartItems[isExistingIndex].total_price =
-        updatedCartItems[isExistingIndex].quantity * action.item.price;
-
-      console.log(updatedCartItems[isExistingIndex].quantity);
+    if (!existingItem) {
+      state.total_price = state.total_price + newItem.price;
+      state.cartItems.push({
+        id: newItem.id,
+        name: newItem.name,
+        price: newItem.price,
+        originalPrice: newItem.price,
+        src: newItem.photo,
+        quantity: 1,
+      });
     } else {
-      updatedTotalPrice = action.item.price;
-
-      updatedCartItems = [
-        ...state.cartItems,
-        {
-          ...action.item,
-          quantity: 1,
-          total_price: updatedTotalPrice,
-        },
-      ];
+      existingItem.quantity += 1;
+      existingItem.price = existingItem.quantity * existingItem.originalPrice;
     }
-
-    updatedToQuantity = updatedCartItems.reduce(
+    // get sum of quantity for each item
+    let updatedToQuantity = state.cartItems.reduce(
       (total, item) => total + item.quantity,
       0
     );
-    updatedTotalPrice = updatedCartItems.reduce(
-      (totalPrice, item) => totalPrice + item.total_price,
+    // get sum of price for each item
+
+    let totalPRice = state.cartItems.reduce(
+      (total, item) => total + item.price,
       0
     );
-
     return {
       ...state,
-      cartItems: updatedCartItems,
-      total_price: updatedTotalPrice,
+      cartItems: state.cartItems,
+      total_price: totalPRice,
       quantity: updatedToQuantity,
     };
   }
 
   if (action.type === "removeItem") {
-    const itemToRemove = state.cartItems.find((item) => item.id === action.id);
+    const itemId = action.id;
+    const existingItem = state.cartItems.find((item) => {
+      return item.id === itemId;
+    });
 
-    if (itemToRemove) {
-      let updatedCartItems;
-      let updatedQuantity;
-      let updatedTotalPrice;
-
-      if (itemToRemove.quantity === 1) {
-        updatedTotalPrice = state.total_price - itemToRemove.price;
-        updatedQuantity = state.quantity - 1;
-        updatedCartItems = state.cartItems.filter(
-          (item) => item.id !== action.id
+    if (existingItem) {
+      if (existingItem.quantity === 1) {
+        const updatedItem = state.cartItems.filter(
+          (item) => item.id !== itemId
         );
+
+        return {
+          ...state,
+          quantity: state.quantity - 1,
+          total_price: state.total_price - existingItem.originalPrice,
+          cartItems: updatedItem,
+        };
       } else {
-        itemToRemove.quantity--;
-        updatedTotalPrice = state.total_price - itemToRemove.price;
-        updatedQuantity = state.quantity - 1;
-        updatedCartItems = state.cartItems.map((item) => {
-          if (item.id === action.id) {
-            return { ...item, quantity: item.quantity - 1 };
+        let updatedItems = state.cartItems.map((item) => {
+          if (item.id === itemId) {
+            return {
+              ...item,
+              price: (item.quantity - 1) * item.originalPrice,
+              quantity: --item.quantity,
+            };
           }
           return item;
         });
-      }
 
+        return {
+          ...state,
+          quantity: state.quantity - 1,
+          total_price: state.total_price - existingItem.originalPrice,
+          cartItems: updatedItems,
+        };
+      }
+    }
+  }
+  if (action.type === "addItem") {
+    const itemId = action.id;
+    const existingItem = state.cartItems.find((item) => {
+      return item.id === itemId;
+    });
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+      existingItem.price = existingItem.quantity * existingItem.originalPrice;
+      // get sum of quantity for each item
+
+      let updatedToQuantity = state.cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      // get sum of price for each item
+      let totalPRice = state.cartItems.reduce(
+        (total, item) => total + item.price,
+        0
+      );
       return {
         ...state,
-        cartItems: updatedCartItems,
-        total_price: updatedTotalPrice,
-        quantity: updatedQuantity,
+        total_price: totalPRice,
+        quantity: updatedToQuantity,
       };
     }
   }
 
-  // Return the original state if the action type is not "removeItem"
   return state;
 };
 
-// create reducer
 const context = (props) => {
-  const [storeContext, setStoreContext] = useState({});
-
   const [storeState, dispatchStore] = useReducer(
     storeReducer,
     defaultStoreState
   );
 
-  useEffect(() => {
-    setStoreContext({
-      addToCartHandler: addToCartHandler,
-      removeItemHandler: removeItemHandler,
-      quantity: storeState.quantity,
-      total_price: storeState.total_price,
-      cartItems: storeState.cartItems,
-    });
-  }, [storeState]);
-  // access
   const addToCartHandler = (item) => {
     dispatchStore({ type: "addToCart", item });
   };
   const removeItemHandler = (id) => {
     dispatchStore({ type: "removeItem", id });
   };
+  const addItemHandler = (id) => {
+    dispatchStore({ type: "addItem", id });
+  };
 
+  const storeContext = {
+    addItemHandler: addItemHandler,
+    addToCartHandler: addToCartHandler,
+    removeItemHandler: removeItemHandler,
+    quantity: storeState.quantity,
+    total_price: storeState.total_price,
+    cartItems: storeState.cartItems,
+  };
   // returned data
 
   return (

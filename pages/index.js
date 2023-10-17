@@ -4,8 +4,6 @@ import axios from "axios";
 import classes from "@/styles/home.module.css";
 
 import Add_button from "@/components/layout/Add_button";
-import Delete_button from "@/components/layout/delete_button";
-import Add_quantity_Button from "@/components/layout/add_quantity_Button";
 const Home = () => {
   const [data, getData] = useState([]);
 
@@ -46,9 +44,7 @@ const Home = () => {
 
           <div className={classes.price}>
             <span>Php: {item.price}</span>
-            <Delete_button id={item.id} />
             <Add_button title={"Add to Cart"} item={item} id={item.id} />
-            <Add_quantity_Button id={item.id} />
           </div>
         </div>
       ))}
