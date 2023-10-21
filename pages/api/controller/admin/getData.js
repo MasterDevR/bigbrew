@@ -2,7 +2,7 @@ import dbConn from "../../database/conn.js";
 import util from "util";
 
 const getAllData = async (req, res) => {
-  const con = dbConn(); // Get the database connection
+  const con = dbConn();
   const query = "SELECT * FROM products";
 
   const connectPromise = util.promisify(con.connect).bind(con);

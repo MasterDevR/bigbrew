@@ -8,3 +8,6 @@
     scroll-behavior:smooth;
     height: auto;
 }
+.admin_container{
+    display: flex;
+}

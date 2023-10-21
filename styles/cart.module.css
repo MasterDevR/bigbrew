@@ -1,10 +1,77 @@
 .container{
-    display: flex;
-    gap: 2rem;
+display: flex;
+    row-gap: 2rem;
     flex-direction: column;
+    background-color: #2B2B2B;
+    color: #d58d26;
+    position: relative;
+    width: 63%;
+    height: auto;
+    min-height: 51vh;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin: 6rem auto;
+    align-items: center;
+}
+.container div:nth-child(1){
+    margin-top: 3rem;
+    
+}
+.checkOut{
+    position: relative;
+    width: 90%;
+    border-top: solid #d58d26 2px;
+    margin: 2rem;
+    display: flex;
+    column-gap: 34rem;
+    flex-direction: row;
+    padding-top: 3rem;
+    align-items: center;
+}
+#total_Price{
+    font-size: 2rem;
+    font-weight: bold;
 }
 .card{
     display: flex;
-    gap: 2rem;
-    
+        gap: 2rem;
+        align-items: center;
+        position: relative;
+        width: 90%;
+        justify-content: space-evenly;
+}
+.card span{
+    width: 150px;
+}
+.card span:nth-child(1){
+    width: 252px;
+}
+
+#imgId{
+    width: 100px;
+    height: 100px;
+    transition: 333ms;
+    cursor: pointer;
+}
+.btnContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap:1rem;
+
+}
+.btnContainer button{
+    width: 6rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #d58d26;
+    cursor: pointer;
+    border: none;
+}
+.btnContainer button:hover{
+    background-color: #9f6e29;
+}
+#imgId:hover{
+    transform: scale(1.2);
 }

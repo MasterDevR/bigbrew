@@ -12,7 +12,6 @@ const Nav_bar = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [colorChange, setColorchange] = useState(false); // Nav Bar Color changing
 
-  // Nav Bar Color changing
   useEffect(() => {
     const changeNavbarColor = () => {
       if (window.scrollY > 0) {
@@ -27,13 +26,8 @@ const Nav_bar = () => {
     };
   }, []);
 
-  // store store quantity
-
   useEffect(() => {
     setTotalItems(ctx.quantity);
-    // console.log(ctx.cartItems);
-    // console.log("Nav: " + typeof ctx.total_price);
-    // console.log("Nav: " + ctx.total_price);
   }, [ctx.quantity]);
 
   return (

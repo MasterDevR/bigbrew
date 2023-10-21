@@ -1,0 +1,17 @@
+.checkOut{
+    position: relative;
+    padding: 1rem;
+    width: 11rem;
+    color: wheat;
+    font-weight: bold;
+    font-size: large;
+    margin-left: auto;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 333ms;
+
+}
+.checkOut:hover{
+    background-color: #d58d26;
+    color: black;
+}
