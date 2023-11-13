@@ -4,9 +4,8 @@
     justify-content: center;
     column-gap: 20rem;
     padding: 1rem;
-    margin-top: 1rem;
-    position: sticky;
-    top: 0;
+    position: fixed;
+    width: 100%;
     transition: 999ms;
     z-index: 1;
 }
@@ -35,7 +34,7 @@
     color: red;
 }
 .cartBTN{
-    height: 2rem;
+    height: 3rem;
     display: flex;
     align-items: center;
 }

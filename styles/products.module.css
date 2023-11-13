@@ -1,14 +1,13 @@
 .container {
-display: flex;
+    display: flex;
     flex-direction: column;
     gap: 1rem;
-    background-color: #f4f4f4;
     position: relative;
     width: 80%;
-
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 70%;
+    position: relative;
+    width: 100%;    
 }
 
 

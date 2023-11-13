@@ -11,14 +11,11 @@ const Home = () => {
   const { token } = router.query;
 
   useEffect(() => {
-    // Check if a token exists (you can use your condition here)
     if (token) {
-      // Retrieve the itemData from localStorage
       const itemData = localStorage.getItem("ItemData");
       console.log("itemData:", itemData);
-      // Check if itemData exists
+
       if (itemData) {
-        // Assuming itemData is an array of items with unique IDs
         axios
           .post(`http://localhost:3000/api/controller/admin/post_sales`, {
             itemData,
@@ -26,14 +23,14 @@ const Home = () => {
           .then((res) => {
             if (res.status === 200) {
               alert("Order Verified");
-              localStorage.removeItem("ItemData"); // Clear the stored data
+              localStorage.removeItem("ItemData");
+              router.push("/");
             } else {
               alert("Order verification failed. Please try again.");
             }
             console.log(res.data);
           })
           .catch((err) => {
-            // Handle errors
             console.error(err);
           });
       }
@@ -49,7 +46,6 @@ const Home = () => {
       });
   }, [token]);
 
-  // Group items by category
   const groupedData = data?.reduce((result, item) => {
     if (!result[item.category]) {
       result[item.category] = [];
@@ -58,7 +54,6 @@ const Home = () => {
     return result;
   }, {});
 
-  // Render the grouped data
   const renderedData = Object.entries(groupedData).map(([category, items]) => (
     <div key={category} className={classes.produtcs_cart}>
       <h1>{category}</h1>

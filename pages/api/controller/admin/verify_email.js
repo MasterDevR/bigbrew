@@ -11,7 +11,7 @@ const verify_email = (req, res) => {
     },
   });
 
-  const verificationToken = uuidv4(); // Generate a unique token for verification
+  const verificationToken = uuidv4();
   const verificationLink = `http://localhost:3000/?token=${verificationToken}`;
 
   const mailOptions = {

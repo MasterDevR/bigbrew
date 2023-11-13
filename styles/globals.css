@@ -2,12 +2,19 @@
     padding: 0%;
     margin: 0%;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
-
+body{
+    background-color: #e2e2e2;
+}
 .Container {
     scroll-behavior:smooth;
     height: auto;
 }
 .admin_container{
     display: flex;
+}
+.admin_container_wrapperv{
+    position: relative;
+    width: 12%;
 }

@@ -1,0 +1,13 @@
+.container{
+position: relative;
+    width: 87%;
+    left: 13%;
+    overflow: hidden;
+}
+.container main{
+    display: flex;
+        justify-content: center;
+        position: relative;
+        width: 100%;
+        padding: 4%;
+}

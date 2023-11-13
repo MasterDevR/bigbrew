@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import classes from "@/styles/products.module.css";
-import { AiFillBackward, AiFillForward } from "react-icons/ai";
+import Navigate from "./Navigate";
 const ProductsDetails = () => {
   const [data, getData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,27 +48,6 @@ const ProductsDetails = () => {
     pageNumbers.push(i);
   }
 
-  const pagination = pageNumbers.map((number) => (
-    <button key={number} onClick={() => handlePageChange(number)}>
-      {number}
-    </button>
-  ));
-  const forwarHandler = () => {
-    setCurrentPage((prev) => {
-      if (prev >= pagination.length) {
-        return prev;
-      }
-      return (prev = prev + 1);
-    });
-  };
-  const backwardHandler = () => {
-    setCurrentPage((prev) => {
-      if (prev === 1) {
-        return prev;
-      }
-      return (prev = prev - 1);
-    });
-  };
   return (
     <div className={classes.container}>
       <table>
@@ -82,12 +61,11 @@ const ProductsDetails = () => {
         </thead>
         <tbody>{products}</tbody>
       </table>
-
-      <div className={classes.pagination}>
-        <AiFillBackward id={classes.action} onClick={backwardHandler} />
-        {pagination}
-        <AiFillForward id={classes.action} onClick={forwarHandler} />
-      </div>
+      <Navigate
+        pageNumbers={pageNumbers}
+        handlePageChange={handlePageChange}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };

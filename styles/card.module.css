@@ -1,0 +1,30 @@
+.card_container{
+    min-width: 20rem;
+        height: 16vh;
+        padding: 10px 10px 20px 10px;
+        border: 1px solid #BFBFBF;
+        background-color: rgb(43 43 43);
+        box-shadow: 10px 10px 5px #aaaaaa;
+        border-radius: 2rem;
+        color: rgb(254, 166, 42);
+}
+.card {
+    display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        overflow: hidden;
+        border-radius: 1rem;
+        transition: 333ms;
+        cursor: pointer;
+        position: relative;
+        width: 100%;
+        top: 0.7rem;
+}
+
+.card #image{
+    border-radius: 1rem;
+}
+.card:hover   {
+    transform: scale(1.2);
+}
