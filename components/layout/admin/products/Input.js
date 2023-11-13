@@ -74,7 +74,6 @@ const Input = ({ addProductHandler }) => {
                   <input
                     type="text"
                     name="category"
-                    value={data.category}
                     placeholder="Product Category"
                     onChange={(event) => handleInputChange(index, event)}
                   />
@@ -83,7 +82,6 @@ const Input = ({ addProductHandler }) => {
                   <input
                     type="text"
                     name="name"
-                    value={data.name}
                     placeholder="Product Name"
                     onChange={(event) => handleInputChange(index, event)}
                   />
@@ -92,7 +90,6 @@ const Input = ({ addProductHandler }) => {
                   <input
                     type="file"
                     name="image"
-                    value={data.image}
                     placeholder="Produce Image"
                     onChange={(event) => handleInputChange(index, event)}
                   />
@@ -101,13 +98,12 @@ const Input = ({ addProductHandler }) => {
                   <input
                     type="number"
                     name="price"
-                    value={data.price}
                     placeholder="Product Price"
                     onChange={(event) => handleInputChange(index, event)}
                   />
                 </td>
                 <td>
-                  {rowData.length !== 1 && index === rowData.length - 1 && (
+                  {rowData.length > 1 && (
                     <MdDelete
                       size={"2rem"}
                       onClick={() => removeRowHandler(index)}
