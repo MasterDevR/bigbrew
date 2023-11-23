@@ -7,13 +7,13 @@ const ProductsDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const url = `http://localhost:3000/api/controller/admin/getData`;
+  const url = `http://localhost:3001/products`;
 
   useEffect(() => {
     axios
       .get(url)
       .then((res) => {
-        getData(res.data);
+        getData(res.data.result);
       })
       .catch((err) => {
         console.log(err);

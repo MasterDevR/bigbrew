@@ -13,7 +13,7 @@ const check_out = () => {
     setData(ctx.cartItems);
   }, [ctx.cartItems]);
 
-  const verify_email_url = `http://localhost:3000/api/controller/admin/verify_email`;
+  const verify_email_url = `http://localhost:3001/verifyEmail`;
 
   const checkOutHandler = async () => {
     if (data.length === 0) {

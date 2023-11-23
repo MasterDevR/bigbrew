@@ -4,7 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 const Card = () => {
   const [data, setData] = useState([]);
-  const url = `http://localhost:3000/api/controller/admin/getSales`;
+  const url = `http://localhost:3001/getSales`;
 
   useEffect(() => {
     axios

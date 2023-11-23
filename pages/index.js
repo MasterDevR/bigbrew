@@ -17,7 +17,7 @@ const Home = () => {
 
       if (itemData) {
         axios
-          .post(`http://localhost:3000/api/controller/admin/post_sales`, {
+          .post(`http://localhost:3001/postSales`, {
             itemData,
           })
           .then((res) => {
@@ -37,9 +37,9 @@ const Home = () => {
     }
 
     axios
-      .get("http://localhost:3000/api/controller/admin/getData")
+      .get("http://localhost:3001/products")
       .then((res) => {
-        getData(res.data);
+        getData(res.data.result);
       })
       .catch((err) => {
         console.log(err);

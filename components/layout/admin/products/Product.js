@@ -11,13 +11,13 @@ const Product = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Product");
   const [isAddProduct, setAddProduct] = useState(false);
   const [editing, setEditing] = useState(false);
-  const url = `http://localhost:3000/api/controller/admin/getData`;
+  const url = `http://localhost:3001/products`;
 
   useEffect(() => {
     axios
       .get(url)
       .then((res) => {
-        getData(res.data);
+        getData(res.data.result);
       })
       .catch((err) => {
         console.log(err);

@@ -6,7 +6,7 @@ const post_sale = async (req, res) => {
 
     const con = dbConn();
 
-    console.log(`Databest : ${data}`);
+    console.log(`hadashdawd : ${data}`);
     const updateAndInsertPromises = data.map((item) => {
       return new Promise((resolve, reject) => {
         const { id, name, src, category, price, originalPrice, quantity } =

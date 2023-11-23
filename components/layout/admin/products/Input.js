@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import classes from "@/styles/input.module.css";
 import { RiPlayListAddLine } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
+import axios from "axios";
 
 const Input = ({ addProductHandler }) => {
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState();
   const [rowData, setRowData] = useState([
     { category: "", name: "", image: "", price: "" },
   ]);
@@ -33,16 +36,60 @@ const Input = ({ addProductHandler }) => {
   };
 
   const handleInputChange = (index, event) => {
-    const { name, value } = event.target;
+    const { name, files } = event.target;
     const updatedData = [...rowData];
-    updatedData[index] = { ...updatedData[index], [name]: value };
-    setRowData(updatedData);
+
+    if (files && files.length > 0) {
+      updatedData[index] = { ...updatedData[index], [name]: files[0] };
+      setRowData(updatedData);
+    } else {
+      updatedData[index] = {
+        ...updatedData[index],
+        [name]: event.target.value,
+      };
+      setRowData(updatedData);
+    }
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(rowData);
+    const formData = new FormData();
+
+    rowData.forEach((data) => {
+      formData.append(`category`, data.category);
+      formData.append(`name`, data.name);
+      formData.append(`file`, data.image);
+      formData.append(`price`, data.price);
+    });
+    console.log("dta");
+    axios
+      .post("http://localhost:3001/postProducts", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          axios
+            .post("http://localhost:3001/upload", formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((response) => {
+              console.log("upload " + response.status);
+            })
+            .catch((err) => {
+              console.log("ERROR " + err);
+            });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((err) => {
+        console.log("ERROR " + err);
+      });
   };
+
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
 
   const hideAddproductHandler = () => {
     addProductHandler(false);
@@ -90,7 +137,7 @@ const Input = ({ addProductHandler }) => {
                   <input
                     type="file"
                     name="image"
-                    placeholder="Produce Image"
+                    placeholder="Product Image"
                     onChange={(event) => handleInputChange(index, event)}
                   />
                 </td>
