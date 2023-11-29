@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import classes from "@/styles/productList.module.css";
-import { FiEdit } from "react-icons/fi";
-import { MdDeleteSweep } from "react-icons/md";
+import EditProduct from "./action/edit-prod";
+import EditProductCat from "./action/edit-prod-cat";
 import Inputfeild from "./Input";
 import Product_header from "./Product_header";
 const Product = () => {
@@ -42,8 +42,8 @@ const Product = () => {
     setEditingStates(newEditingStates);
   };
 
-  const submitHandler = (id) => {
-    console.log("item ID to save : " + id);
+  const submitHandler = (item) => {
+    console.log(item);
   };
   const deleteHandler = (id) => {
     console.log("item ID to delete : " + id);
@@ -54,175 +54,31 @@ const Product = () => {
     });
   };
 
-  // display product
+  useEffect(() => {
+    console.log(selectedCategory);
+  }, [selectedCategory]);
+
   const products =
-    selectedCategory === "All Product"
-      ? data.map((item, index) => (
-          <tr key={item.id}>
-            {/* get product index */}
-            {!editingStates[index] ? (
-              <>
-                <td>{item.category}</td>
-                <td>{item.name}</td>
-                <td style={{ textAlign: "center" }}>
-                  <img
-                    src={`/images/${item.photo}`}
-                    alt={item.name}
-                    className={classes.product_image}
-                  />
-                </td>
-                <td>{item.price}</td>
-                {/* display action button if editing  */}
-                {editing && (
-                  <>
-                    <td
-                      className={classes.actionBTN}
-                      onClick={() => toggleEditing(index)}
-                    >
-                      <FiEdit color={"green"} />
-                    </td>
-                    <td
-                      className={classes.actionBTN}
-                      onClick={() => deleteHandler(item.id)}
-                    >
-                      <MdDeleteSweep color={"red"} />
-                    </td>
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                {/*display input feild if editing*/}
-
-                <td>
-                  <input type="text" defaultValue={item.category} />
-                </td>
-                <td>
-                  <input type="text" defaultValue={item.name} />
-                </td>
-                <td>
-                  <div className={classes.srcDiv}>
-                    <input type="file" />
-
-                    <img
-                      src={`/images/${item.photo}`}
-                      alt={item.name}
-                      className={classes.product_image}
-                    />
-                  </div>
-                </td>
-                <td>
-                  <input type="text" defaultValue={item.price} />
-                </td>
-                <td
-                  className={classes.actionBTN}
-                  onClick={() => toggleEditing(index)}
-                >
-                  <span style={{ color: "red" }}>Cancel</span>
-                </td>
-
-                <td
-                  className={classes.actionBTN}
-                  onClick={() => deleteHandler(item.id)}
-                >
-                  <MdDeleteSweep color={"red"} />
-                </td>
-                {!editingStates[index] ? (
-                  <td></td>
-                ) : (
-                  <td
-                    className={classes.actionBTN}
-                    onClick={() => submitHandler(item.id)}
-                  >
-                    <span style={{ color: "green" }}>Save</span>
-                  </td>
-                )}
-              </>
-            )}
-          </tr>
-        ))
-      : data // display filtered data
-          .filter((item) => item.category === selectedCategory)
-          .map((item, index) => (
-            <tr key={item.id}>
-              {!editingStates[index] ? (
-                <>
-                  <td>{item.category}</td>
-                  <td>{item.name}</td>
-                  <td style={{ textAlign: "center" }}>
-                    <img
-                      src={`/images/${item.photo}`}
-                      alt={item.name}
-                      className={classes.product_image}
-                    />
-                  </td>
-                  <td>{item.price}</td>
-                  {editing && (
-                    <>
-                      <td
-                        className={classes.actionBTN}
-                        onClick={() => toggleEditing(index)}
-                      >
-                        <FiEdit color={"green"} />
-                      </td>
-                      <td
-                        className={classes.actionBTN}
-                        onClick={() => deleteHandler(item.id)}
-                      >
-                        <MdDeleteSweep color={"red"} />
-                      </td>
-                    </>
-                  )}
-                </>
-              ) : (
-                <>
-                  {/*display input feild if editing*/}
-                  <td>
-                    <input type="text" defaultValue={item.category} />
-                  </td>
-                  <td>
-                    <input type="text" defaultValue={item.name} />
-                  </td>
-                  <td>
-                    <div className={classes.srcDiv}>
-                      <input type="file" />
-
-                      <img
-                        src={`/images/${item.photo}`}
-                        alt={item.name}
-                        className={classes.product_image}
-                      />
-                    </div>
-                  </td>
-                  <td>
-                    <input type="text" defaultValue={item.price} />
-                  </td>
-                  <td
-                    className={classes.actionBTN}
-                    onClick={() => toggleEditing(index)}
-                  >
-                    <span style={{ color: "red" }}>Cancel</span>
-                  </td>
-                  <td
-                    className={classes.actionBTN}
-                    onClick={() => deleteHandler(item.id)}
-                  >
-                    <MdDeleteSweep color={"red"} />
-                  </td>
-                  {!editingStates[index] ? (
-                    <td></td>
-                  ) : (
-                    <td
-                      className={classes.actionBTN}
-                      onClick={() => submitHandler(item.id)}
-                    >
-                      <span style={{ color: "green" }}>Save</span>
-                    </td>
-                  )}
-                </>
-              )}
-            </tr>
-          ));
+    selectedCategory === "All Product" ? (
+      <EditProduct
+        products={data}
+        toggleEditing={toggleEditing}
+        submitHandler={submitHandler}
+        deleteHandler={deleteHandler}
+        editingStates={editingStates}
+        editing={editing}
+      />
+    ) : (
+      <EditProductCat
+        products={data}
+        toggleEditing={toggleEditing}
+        submitHandler={submitHandler}
+        deleteHandler={deleteHandler}
+        editingStates={editingStates}
+        editing={editing}
+        selectedCategory={selectedCategory}
+      />
+    );
 
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
